@@ -1,6 +1,6 @@
 require_relative '../../lib/observers'
 
-class Publisher
+class Observable
   extend Observers
 
   observable
