@@ -22,7 +22,7 @@ class Subscriber
   extend Observers
   observe Publisher
 
-  def action
+  def self.action
     # Method that will be called.
   end
 end
