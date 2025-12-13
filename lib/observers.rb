@@ -4,13 +4,12 @@ require_relative 'observables'
 require_relative 'models/observer'
 
 module Observers
-  def observable(observable = nil)
-    observable = self if observable.nil?
-    Observables.create(observable:)
+  def observable(key = self)
+    Observables.create(key:)
   end
 
-  def observe(observable, order: 0)
-    observer = Observer.new(observer: self, order:)
-    Observables.observe(observable:, observer:)
+  def observe(key, order: 0)
+    observer = Observer.new(key:, order:)
+    Observables.observe(key:, observer:)
   end
 end

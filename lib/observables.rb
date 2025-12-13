@@ -14,13 +14,13 @@ module Observers
         @observables
       end
 
-      def create(observable:)
-        observables[observable] = Observable.new(observable:)
-        observables[observable]
+      def create(key:)
+        observables[key] = Observable.new(key:)
+        observables[key]
       end
 
-      def observe(observable:, observer:)
-        observable = observables[observable] || create(observable:)
+      def observe(key:, observer:)
+        observable = observables[key] || create(key:)
         observable.add_observer(observer:)
       end
     end

@@ -4,8 +4,8 @@ module Observers
   class Observer
     attr_reader :order
 
-    def initialize(observer:, order:)
-      @observer = observer
+    def initialize(key:, order:)
+      @key = key
       @order = order
     end
   end

@@ -4,8 +4,8 @@ module Observers
   class Observable
     attr_reader :observers
 
-    def initialize(observable:)
-      @observable = observable
+    def initialize(key:)
+      @key = key
       @observers = []
     end
 
