@@ -29,7 +29,12 @@ RSpec.describe Subscriber do
       allow(Subscriber).to receive(:action)
     end
 
-    it 'triggers an observer' do
+    it "triggers an observer's action" do
+      Publisher.trigger :action
+      expect(Subscriber).to have_received(:action)
+    end
+
+    it "triggers an observer's action via method" do
       Publisher.action_method
       expect(Subscriber).to have_received(:action)
     end
