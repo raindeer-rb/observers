@@ -36,7 +36,9 @@ end
 MyPublisher.trigger :action # => Calls the "action" method on MySubscriber
 ```
 
-### Event Trigger [UNRELEASED]
+### Event Trigger
+
+Any object that has an `action` method is considered an event:
 
 ```ruby
 MyPublisher.trigger LowEvent.new(action: :action) # => Calls the "action" method on MySubscriber
