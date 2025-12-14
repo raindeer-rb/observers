@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/observers'
-load 'spec/fixtures/publisher.rb'
-load 'spec/fixtures/subscriber.rb'
+require_relative '../fixtures/event'
+require_relative '../fixtures/publisher.rb'
+require_relative '../fixtures/subscriber.rb'
 
 RSpec.describe Subscriber do
-  describe '#initialize' do
+  describe 'Observables#observables' do
     before do
       Observers::Observables.reset
       Object.send(:remove_const, 'Subscriber')
@@ -17,7 +18,7 @@ RSpec.describe Subscriber do
     end
   end
 
-  describe 'Observable#trigger' do
+  describe 'Observers#trigger' do
     before do
       Observers::Observables.reset
 
@@ -29,14 +30,32 @@ RSpec.describe Subscriber do
       allow(Subscriber).to receive(:action)
     end
 
-    it "triggers an observer's action" do
-      Publisher.trigger :action
-      expect(Subscriber).to have_received(:action)
+    context 'when the actionable is a symbol' do
+      let(:actionable) { :action }
+
+      it "triggers an observer's action" do
+        Publisher.trigger actionable
+        expect(Subscriber).to have_received(:action)
+      end
+
+      it "triggers an observer's action via method" do
+        Publisher.actionable_via_method(actionable)
+        expect(Subscriber).to have_received(:action)
+      end
     end
 
-    it "triggers an observer's action via method" do
-      Publisher.action_method
-      expect(Subscriber).to have_received(:action)
+    context 'when the actionable is an event' do
+      let(:actionable) { Event.new(action: :action) }
+
+      it "triggers an observer's action" do
+        Publisher.trigger actionable
+        expect(Subscriber).to have_received(:action)
+      end
+
+      it "triggers an observer's action via method" do
+        Publisher.actionable_via_method(actionable)
+        expect(Subscriber).to have_received(:action)
+      end
     end
   end
 end

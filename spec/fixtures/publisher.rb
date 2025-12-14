@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/observers'
-require_relative 'event'
 
 class Publisher
   extend Observers
@@ -9,12 +8,8 @@ class Publisher
   observable
 
   class << self
-    def action_method
-      trigger :action
-    end
-
-    def event_method
-      trigger Event.new(action: :action)
+    def actionable_via_method(actionable)
+      trigger actionable
     end
   end
 end

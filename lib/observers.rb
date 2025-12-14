@@ -26,7 +26,7 @@ module Observers
 
     if action.respond_to?(:action)
       event = action
-      action = arg.action
+      action = event.action
     end
 
     Observables.trigger(key:, action:, event: nil)
