@@ -30,18 +30,20 @@ end
 
 ## Triggers
 
-### Method Trigger
+### Methods
 
 ```ruby
 MyPublisher.trigger :action # => Calls the "action" method on MySubscriber
+MyPublisher.take :action # => Calls the "action" method on all observers and returns the first non-nil return value.
 ```
 
-### Event Trigger
+### Events
 
 Any object that has an `action` method is considered an event:
 
 ```ruby
-MyPublisher.trigger LowEvent.new(action: :action) # => Calls the "action" method on MySubscriber
+MyPublisher.trigger MyEvent.new(action: :action) # => Calls the "action" method on MySubscriber
+MyPublisher.take MyEvent.new(action: :action) # => Calls the "action" method on all observers and returns the first non-nil return value.
 ```
 
 ## Installation

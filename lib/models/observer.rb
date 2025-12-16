@@ -10,7 +10,10 @@ module Observers
     end
 
     def trigger(action:, event:)
-      event ? @observer.send(action, event) : @observer.send(action)
+      event ? @observer.send(action, **{ event: event }) : @observer.send(action)
+    rescue ArgumentError
+      type = @observer.instance_of?(Class) ? @observer : @observer.class
+      raise ArgumentError, "#{event.class} sent to #{type}##{action} but it has no 'event:' keyword argument"
     end
   end
 end

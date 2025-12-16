@@ -8,27 +8,19 @@ module Observers
     Observables.upsert(key:)
   end
 
-  def observe(key, order: 0)
+  # TODO: Test order.
+  def observe(key, order: Observables.observables.count)
     observer = Observer.new(observer: self, order:)
     Observables.observe(key:, observer:)
   end
 
   def trigger(*args)
-    key = self
-    action = nil
+    Observables.trigger(*args, key: self)
+  end
 
-    case args.count
-    when 1
-      action = args.first
-    when 2
-      key, action = args
-    end
-
-    if action.respond_to?(:action)
-      event = action
-      action = event.action
-    end
-
-    Observables.trigger(key:, action:, event: nil)
+  # Returns the first observer with a non-nil return value.
+  # One day it may use ractors and be concurrent, if we can freeze the args.
+  def take(*args)
+    Observables.take(*args, key: self)
   end
 end
