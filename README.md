@@ -61,6 +61,3 @@ Add `gem 'observers'` to your Gemfile then:
 ```
 bundle install
 ```
-
-## Integrations
-
