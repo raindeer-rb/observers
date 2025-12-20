@@ -23,14 +23,14 @@ class MySubscriber
   observe MyPublisher
 
   def self.action
-    # Method that will be called.
+    # Method that will be called upon trigger.
   end
 end
 ```
 
 ## Triggers
 
-### Methods
+### Actions
 
 ```ruby
 MyPublisher.trigger :action # => Calls the "action" method on MySubscriber
@@ -39,16 +39,32 @@ MyPublisher.take :action # => Calls the "action" method on all observers and ret
 
 ### Events
 
-Observers integrates with [LowEvent](https://github.com/low-rb/low_event), allowing you to pass an event to your observer.  
-
-Any object that inherits from `LowEvent` is considered an event:
+Observers integrates with [LowEvent](https://github.com/low-rb/low_event), allowing you to pass an event to your observer:
 
 ```ruby
 # Call the "handle(event:)" method on all observers to MySubscriber:
-MyPublisher.trigger MyEvent.new(event_data)
+MyPublisher.trigger LowEvent.new(event_data)
 
 # Call the "handle(event:)" method on all observers to MySubscriber and return the first observer's return value that is non-nil:
-MyPublisher.take MyEvent.new(event_data)
+MyPublisher.take LowEvent.new(event_data)
+```
+
+ℹ️ **Note:** Any object that inherits from `LowEvent` is considered an event.
+
+## Observer Action
+
+The default action that will be called on an observer is `handle` or `handle(event:)`, which can be overidden via triggers as seen above.
+
+You can also override the action handler per observer to always be a certain action regardless of the trigger's action/event's action.
+```ruby
+class MySubscriber
+  extend Observers
+  observe MyPublisher, :clear_cache
+
+  def self.clear_cache
+    # All triggers will call this action regardless of their action.
+  end
+end
 ```
 
 ## Architecure

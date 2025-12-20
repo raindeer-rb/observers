@@ -12,6 +12,7 @@ RSpec.describe 'Subscribers' do
     Object.send(:remove_const, 'Publisher')
     Object.send(:remove_const, 'NilSubscriber')
     Object.send(:remove_const, 'TrueSubscriber')
+    Object.send(:remove_const, 'ActionSubscriber')
 
     load 'spec/fixtures/publisher.rb'
     load 'spec/fixtures/subscribers.rb'
@@ -19,7 +20,7 @@ RSpec.describe 'Subscribers' do
 
   describe 'Observables#observables' do
     it 'creates an observer' do
-      expect(Observers::Observables.observables[Publisher].observers.count).to eq(2)
+      expect(Observers::Observables.observables[Publisher].observers.count).to eq(3)
     end
   end
 
@@ -57,6 +58,24 @@ RSpec.describe 'Subscribers' do
       it "triggers an observer's action via method" do
         Publisher.trigger_via_method(actionable)
         expect(TrueSubscriber).to have_received(:action)
+      end
+    end
+
+    context 'when the subscriber overrides the action' do
+      let(:actionable) { :action }
+
+      before do
+        allow(ActionSubscriber).to receive(:overridden_action)
+      end
+
+      it "triggers an observer's overridden action" do
+        Publisher.trigger actionable
+        expect(ActionSubscriber).to have_received(:overridden_action)
+      end
+
+      it "triggers an observer's overridden action via method" do
+        Publisher.trigger_via_method(actionable)
+        expect(ActionSubscriber).to have_received(:overridden_action)
       end
     end
   end

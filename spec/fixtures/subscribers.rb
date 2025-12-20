@@ -11,9 +11,8 @@ class NilSubscriber < Subscriber
   observe Publisher
 
   class << self
-    def action(event: nil)
-      event
-      nil # These return values are stubbed anyway but here they are to show intent.
+    def action(event: nil) # rubocop:disable Lint/UnusedMethodArgument
+      nil # Stubbed via test but here to show intent.
     end
   end
 end
@@ -22,9 +21,18 @@ class TrueSubscriber < Subscriber
   observe Publisher
 
   class << self
-    def action(event: nil)
-      event
-      true # These return values are stubbed anyway but here they are to show intent.
+    def action(event: nil) # rubocop:disable Lint/UnusedMethodArgument
+      true # Stubbed via test but here to show intent.
+    end
+  end
+end
+
+class ActionSubscriber < Subscriber
+  observe Publisher, :overridden_action
+
+  class << self
+    def overridden_action(event: nil) # rubocop:disable Lint/UnusedMethodArgument
+      nil # Stubbed via test but here to show intent.
     end
   end
 end

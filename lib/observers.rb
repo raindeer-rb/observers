@@ -8,9 +8,9 @@ module Observers
     Observables.upsert(key:)
   end
 
-  # TODO: Test order.
-  def observe(key, order: Observables.observables.count)
-    observer = Observer.new(observer: self, order:)
+  # TODO: Unit test order.
+  def observe(key, action = nil, order: Observables.observables.count)
+    observer = Observer.new(observer: self, action:, order:)
     Observables.observe(key:, observer:)
   end
 
