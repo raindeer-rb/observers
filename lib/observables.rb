@@ -10,13 +10,13 @@ module Observers
         @observables
       end
 
-      def reset
-        @observables = {}
-      end
-
       def upsert(key:)
         observables[key] = Observable.new(key:) if observables[key].nil?
         observables[key]
+      end
+
+      def reset
+        @observables = {}
       end
 
       def observe(key:, observer:)
