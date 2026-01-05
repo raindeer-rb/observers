@@ -4,11 +4,14 @@ require_relative 'models/observable'
 
 module Observers
   class Observables
+    class MissingObservableError < StandardError; end
+
     class << self
       def observables
         @observables ||= {}
         @observables
       end
+      alias all observables
 
       def upsert(key:)
         observables[key] = Observable.new(key:) if observables[key].nil?
@@ -26,6 +29,9 @@ module Observers
 
       def trigger(actionable:, key:)
         action, event = parse_actionable(actionable:)
+
+        observable = observables[key]
+        raise MissingObservableError, "Observable key '#{key}' not found" if observable.nil?
 
         observables[key].observers.each do |observer|
           observer.trigger(action:, event:)
