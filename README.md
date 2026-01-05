@@ -69,7 +69,7 @@ end
 
 ## Architecure
 
-`Observer`s are decoupled from the classes/objects they `observe`. Instead of directly observing a particular `Observable`, we observe the "key" that represents that `Observable`. This allows us to observe entities with arbitrary keys.
+`Observer`s are decoupled from the classes/objects they `observe`. Instead of directly observing a particular `Observable`, we observe the "key" that represents that `Observable`. This allows us to observe entities with arbitrary keys; classes, objects, strings or symbols are all suitable.
 
 **Observers uses the singleton pattern and for good reasons:**
 - Observers operates primarily at the class level. Injecting itself as a dependency to other class methods would mean just referencing global constants anyway
