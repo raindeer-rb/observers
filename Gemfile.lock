@@ -1,4 +1,9 @@
 PATH
+  remote: ../low_type
+  specs:
+    low_type (1.1.5)
+
+PATH
   remote: .
   specs:
     observers (0.2.0)
@@ -71,6 +76,7 @@ PLATFORMS
   x86_64-darwin-22
 
 DEPENDENCIES
+  low_type!
   observers!
   pry
   pry-nav

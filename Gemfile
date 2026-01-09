@@ -6,6 +6,8 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
+  gem 'low_type', path: '../low_type' # Provides Status type.
+
   gem 'pry'
   gem 'pry-nav'
   gem 'rack'
