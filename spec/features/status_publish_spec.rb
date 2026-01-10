@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/observers'
-require_relative '../fixtures/status_publisher.rb'
+require_relative '../fixtures/status_publisher'
 
 RSpec.describe 'StatusPublisher' do
   before do

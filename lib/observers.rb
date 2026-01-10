@@ -24,7 +24,7 @@ module Observers
 
   # Returns the last observer with a non-nil return value.
   def trigger(key = self, action: nil, event: nil)
-    raise ArgumentError, "Action or event required" if action.nil? && event.nil?
+    raise ArgumentError, 'Action or event required' if action.nil? && event.nil?
 
     # TODO: Parsing logic can be simplified/removed now that action and event args are separated.
     Observables.trigger(actionable: action || event, key:)
