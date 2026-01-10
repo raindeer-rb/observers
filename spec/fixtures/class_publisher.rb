@@ -3,7 +3,7 @@
 require_relative '../../lib/observers'
 
 class ClassPublisher
-  extend Observers
+  include Observers
   observable
 
   class << self

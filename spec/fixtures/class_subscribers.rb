@@ -4,7 +4,7 @@ require_relative '../../lib/observers'
 require_relative 'class_publisher'
 
 class ClassSubscriber
-  extend Observers
+  include Observers
 end
 
 class NilSubscriber < ClassSubscriber

@@ -5,7 +5,7 @@ require_relative '../../lib/observers'
 
 class StatusPublisher
   include LowType
-  extend Observers
+  include Observers
 
   observable Status[200]
 

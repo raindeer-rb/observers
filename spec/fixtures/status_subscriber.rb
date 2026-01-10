@@ -5,7 +5,7 @@ require_relative '../../lib/observers'
 
 class StatusSubscriber
   include LowType
-  extend Observers
+  include Observers
 
   observe Status[200]
 end
