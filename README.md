@@ -59,11 +59,14 @@ MyPublisher.trigger any_object_or_class, event: LowEvent.new(event_data)
 
 ### Default Action
 
-The default action that will be called on an observer is `handle` or `handle(event:)` if the action or event don't specify this.
+The default action that will be called on an observer is `handle` or `handle(event:)` if the action, event or `overridden_action` don't specify this.
 
-### Overridden Action
+### Overriding Actions
 
-You can also override the action handler on the `Observer` side, to always be a certain action regardless of the trigger's action/event's action.
+An action can be overridden at each layer:
+1. On the `trigger` method by including an `action:` keyword argument
+2. On the event by populating its `action` attribute
+3. On the observer by configuring an `overridden_action:` on `observe`:
 
 ```ruby
 class MySubscriber
@@ -71,7 +74,7 @@ class MySubscriber
   observe MyPublisher, overridden_action: :clear_cache
 
   def self.clear_cache
-    # All triggers will call this method instead.
+    # The `clear_cache` method will be called regardless of the trigger's action/event's action.
   end
 end
 ```

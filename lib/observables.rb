@@ -27,9 +27,10 @@ module Observers
         observable.add_observer(observer:)
       end
 
-      # @return: The last result of the trigger.
-      def trigger(actionable:, key:)
-        action, event = parse_actionable(actionable:)
+      # @return: The result of the last trigger with a non-nil value.
+      def trigger(key:, action:, event:)
+        action = event.action if event && action.nil?
+        action = :handle if action.nil?
 
         observable = observables[key]
         raise MissingObservableError, "Observable key '#{key}' not found" if observable.nil?
@@ -42,20 +43,6 @@ module Observers
         end
 
         last_result
-      end
-
-      private
-
-      def parse_actionable(actionable:)
-        action = actionable
-        event = nil
-
-        if actionable.class.ancestors.any? { |ancestor| ancestor.to_s == 'Low::Event' }
-          event = actionable
-          action = event.action
-        end
-
-        [action, event]
       end
     end
   end
