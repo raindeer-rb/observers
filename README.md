@@ -11,7 +11,7 @@ class MySubscriber
   include Observers
   observe MyPublisher
 
-  def self.action
+  def self.handle
     # Method that will be called upon trigger.
   end
 end
