@@ -17,8 +17,8 @@ module Observers
   end
 
   # TODO: Unit test order.
-  def observe(key, overridden_action: nil, order: Observables.observables.count)
-    observer = Observer.new(observer: self, action: overridden_action, order:)
+  def observe(key, action: nil, order: Observables.observables.count)
+    observer = Observer.new(observer: self, action:, order:)
     Observables.observe(key:, observer:)
   end
 

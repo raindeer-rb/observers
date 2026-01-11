@@ -4,7 +4,8 @@
 
 Observe any objects of any kind and trigger actions/events on those objects.
 
-Observers are decoupled from the classes/objects they observe. Instead of directly observing a particular object, we observe the "key" that represents that object. Any class or object can be observed out of the box, you just need to `observe` it:
+Observers are decoupled from the classes/objects they observe. Instead of directly observing a particular object, we observe the "key" that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
+
 ```ruby
 class MySubscriber
   include Observers
@@ -15,8 +16,6 @@ class MySubscriber
   end
 end
 ```
-
-ℹ️ **Note:** You can observe any entity; classes, objects, structs, strings or symbols are all suitable.
 
 ## Triggers
 
@@ -59,19 +58,19 @@ MyPublisher.trigger any_object_or_class, event: LowEvent.new(event_data)
 
 ### Default Action
 
-The default action that will be called on an observer is `handle` or `handle(event:)` if the action, event or `overridden_action` don't specify this.
+The default action that will be called on an observer is `handle` or `handle(event:)` if the action, event or `action` don't specify this.
 
 ### Overriding Actions
 
 An action can be overridden at each layer:
 1. On the `trigger` method by including an `action:` keyword argument
 2. On the event by populating its `action` attribute
-3. On the observer by configuring an `overridden_action:` on `observe`:
+3. On the observer by configuring an `action:` on `observe`:
 
 ```ruby
 class MySubscriber
   include Observers
-  observe MyPublisher, overridden_action: :clear_cache
+  observe MyPublisher, action: :clear_cache
 
   def self.clear_cache
     # The `clear_cache` method will be called regardless of the trigger's action/event's action.

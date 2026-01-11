@@ -14,7 +14,6 @@ Minor features that don't break backwards compatibility are released as patches.
 ### Changed
 
 - Formalise `trigger` API to use `action` and `event` keyword arguments
-- Rename `observe`s `action` to `overridden_action`
 
 ### Removed
 
