@@ -7,8 +7,6 @@ class StatusPublisher
   include LowType
   include Observers
 
-  observable Status[200]
-
   class << self
     def trigger_action(action:)
       trigger(LowType::Status[200], action:)

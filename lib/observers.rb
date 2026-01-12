@@ -8,14 +8,6 @@ module Observers
     klass.extend Observers
   end
 
-  def observables
-    Observables.observables
-  end
-
-  def observable(key = self)
-    Observables.upsert(key:)
-  end
-
   # TODO: Unit test order.
   def observe(key, action: nil, order: Observables.observables.count)
     observer = Observer.new(object: self, action:, order:)

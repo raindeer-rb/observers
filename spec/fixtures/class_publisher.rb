@@ -4,7 +4,6 @@ require_relative '../../lib/observers'
 
 class ClassPublisher
   include Observers
-  observable
 
   class << self
     def trigger_action(action:)
