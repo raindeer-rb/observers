@@ -22,3 +22,5 @@ module Observers
 
   # TODO: Provide a "pipe/port/take" method that uses ractors to be concurrent... if supplied with immutable Data?
 end
+
+OOO = Observers::Observables.observables
