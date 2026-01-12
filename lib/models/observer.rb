@@ -18,6 +18,7 @@ module Observers
 
       raise ArgumentError, "#{type}##{action} has an 'event:' keyword argument but no event was sent" if event.nil?
 
+      # TODO: An error here will bubble up to the observer that triggered this observer, overwriting this error with its error.
       raise ArgumentError, "#{event.class} sent to #{type}##{action} but it has no 'event:' keyword argument"
     end
   end
