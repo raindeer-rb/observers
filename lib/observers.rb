@@ -18,7 +18,7 @@ module Observers
 
   # TODO: Unit test order.
   def observe(key, action: nil, order: Observables.observables.count)
-    observer = Observer.new(observer: self, action:, order:)
+    observer = Observer.new(object: self, action:, order:)
     Observables.observe(key:, observer:)
   end
 
