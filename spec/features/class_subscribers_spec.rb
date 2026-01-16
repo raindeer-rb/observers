@@ -24,7 +24,7 @@ RSpec.describe 'ClassSubscribers' do
     end
   end
 
-  describe 'Observers#trigger' do
+  describe '#trigger' do
     context 'with action' do
       let(:action) { :action }
 

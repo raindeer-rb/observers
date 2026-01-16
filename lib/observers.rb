@@ -24,9 +24,12 @@ module Observers
     Observables[key].observe(object: self, action:)
   end
 
-  # Returns the last observer's non-nil return value.
   def trigger(key = self, action: nil, event: nil)
     Observables.fetch(key).trigger(action:, event:)
+  end
+
+  def take(key = self, action: nil, event: nil)
+    Observables.fetch(key).take(action:, event:)
   end
 
   # TODO: Provide a "pipe/port/take" method that uses ractors to be concurrent... if supplied with immutable Data?
