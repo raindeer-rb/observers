@@ -2,9 +2,9 @@
 
 # Observers
 
-Observe any objects of any kind and trigger actions/events on those objects.
+Observe objects of any kind and trigger actions/events on them.
 
-Observers are decoupled from the classes/objects they observe. Instead of directly observing a particular object, we observe the "key" that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
+Observers are decoupled from the objects they observe. Instead of directly observing a particular object, we observe the "key" that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
 
 ```ruby
 class MySubscriber
@@ -16,6 +16,16 @@ class MySubscriber
   end
 end
 ```
+
+You can also add observers from the object being observed:
+```ruby
+class MyPublisher
+  include Observers
+  observers << MySubscriber
+end
+```
+
+ℹ️ **Note:** Observers are called in the order that they are defined.
 
 ## Triggers
 
@@ -54,7 +64,7 @@ Trigger the event on any observers to `any_object_or_class`:
 MyPublisher.trigger any_object_or_class, event: LowEvent.new(event_data)
 ```
 
-ℹ️ **Note:** Events should inherit from `LowEvent` or provide an `action` method.
+ℹ️ **Note:** Events should inherit from `LowEvent` or replicate its methods and attributes.
 
 ### Default Action
 
@@ -66,7 +76,6 @@ An action can be overridden at each layer:
 1. On the `trigger` method by including an `action:` keyword argument
 2. On the event by populating its `action` attribute
 3. On the observer by configuring an `action:` on `observe`:
-
 ```ruby
 class MySubscriber
   include Observers
@@ -77,6 +86,12 @@ class MySubscriber
   end
 end
 ```
+
+### Action Precedence
+
+1. `observe action:` - Overrides `trigger` and event actions
+2. `trigger action:` - Overrides event actions
+3. Event's `@action` - Overrides Observers' default action
 
 ## Installation
 

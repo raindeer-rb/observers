@@ -28,10 +28,10 @@ class TrueSubscriber < ClassSubscriber
 end
 
 class ActionSubscriber < ClassSubscriber
-  observe ClassPublisher, action: :my_action
+  observe ClassPublisher, action: :overridden_action
 
   class << self
-    def my_action(event: nil) # rubocop:disable Lint/UnusedMethodArgument
+    def overridden_action(event: nil) # rubocop:disable Lint/UnusedMethodArgument
       nil # Stubbed via test but here to show intent.
     end
   end

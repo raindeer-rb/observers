@@ -5,11 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Minor features that don't break backwards compatibility are released as patches.
 
-## 0.3.1 [UNRELEASED]
+## 0.4.0
+
+### Added
+
+- Add observers on the observable side via `observers`
 
 ### Removed
 
-- Remove the need to use `observable` in all situations
+- Remove the `observable` method
+- Remove `order` param
 
 ## 0.3.0
 
