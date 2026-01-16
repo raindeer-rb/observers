@@ -11,13 +11,12 @@ module Observers
   end
 
   # Add an observer on the observable side.
-  def observers(key = self)
-    ObservableProxy = Struct.new do
+  def observers(key: self)
+    Struct.new(:key) do
       def <<(object, action: nil)
         Observables[key].observe(object:, action:)
       end
-    end
-    ObservableProxy.new
+    end.new(key)
   end
 
   # Add an observer on the observer side.

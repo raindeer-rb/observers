@@ -2,12 +2,11 @@
 
 module Observers
   class Observer
-    attr_reader :order
+    attr_reader :object, :action
 
-    def initialize(object:, action:, order:)
+    def initialize(object:, action:)
       @object = object
       @action = action
-      @order = order
     end
 
     def trigger(action:, event:)

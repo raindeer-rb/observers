@@ -13,7 +13,7 @@ module Observers
       end
 
       def fetch(key)
-        observables[key] || raise MissingObservableError, "Observable key '#{key}' not found"
+        observables[key] || raise(MissingObservableError, "Observable key '#{key}' not found")
       end
 
       def [](key)

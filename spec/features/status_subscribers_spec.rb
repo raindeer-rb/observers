@@ -18,9 +18,9 @@ RSpec.describe 'StatusSubscriber' do
     load 'spec/fixtures/status_subscriber.rb'
   end
 
-  describe 'Observables#observables' do
+  describe 'Observables' do
     it 'creates an observer' do
-      expect(Observers::Observables.observables[LowType::Status[200]].observers.count).to eq(1)
+      expect(Observers::Observables[LowType::Status[200]].observers.count).to eq(1)
     end
   end
 

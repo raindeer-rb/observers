@@ -18,9 +18,9 @@ RSpec.describe 'ClassSubscribers' do
     load 'spec/fixtures/class_subscribers.rb'
   end
 
-  describe 'Observables#observables' do
-    it 'creates an observer' do
-      expect(Observers::Observables.observables[ClassPublisher].observers.count).to eq(3)
+  describe 'Observables' do
+    it 'creates observers' do
+      expect(Observers::Observables[ClassPublisher].observers.count).to eq(4)
     end
   end
 
@@ -65,17 +65,17 @@ RSpec.describe 'ClassSubscribers' do
       let(:action) { :action }
 
       before do
-        allow(ActionSubscriber).to receive(:my_action)
+        allow(ActionSubscriber).to receive(:overridden_action)
       end
 
       it "triggers an observer's overridden action" do
         ClassPublisher.trigger(action:)
-        expect(ActionSubscriber).to have_received(:my_action)
+        expect(ActionSubscriber).to have_received(:overridden_action)
       end
 
       it "triggers an observer's overridden action via method" do
         ClassPublisher.trigger_action(action:)
-        expect(ActionSubscriber).to have_received(:my_action)
+        expect(ActionSubscriber).to have_received(:overridden_action)
       end
     end
   end
