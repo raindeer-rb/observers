@@ -109,6 +109,11 @@ Override the action called on the observer with:
 observers << my_observer, action: :overridden_action
 ```
 
+### Actions
+
+- `trigger` - Calls all observers. Returns the last non-nil value.
+- `take` - Calls all observers up until the first non-nil value. Returns the first non-nil value.
+
 ## Installation
 
 Add `gem 'observers'` to your Gemfile then:

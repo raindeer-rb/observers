@@ -13,7 +13,7 @@ module Observers
       @observers << Observer.new(object:, action:)
     end
 
-    # @returns: The result of the last trigger with a non-nil value.
+    # @returns: The result of the last observer with a non-nil value.
     def trigger(action:, event:)
       action = event.action if event && action.nil?
       action = :handle if action.nil?
@@ -26,6 +26,19 @@ module Observers
       end
 
       last_result
+    end
+
+    # @returns: The result of the first observer with a non-nil value.
+    def take(action:, event:)
+      action = event.action if event && action.nil?
+      action = :handle if action.nil?
+
+      @observers.each do |observer|
+        result = observer.trigger(action:, event:)
+        return result unless result.nil?
+      end
+
+      nil # This is a bad day for the take method, one of the worst.
     end
   end
 end
