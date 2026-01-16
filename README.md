@@ -106,8 +106,10 @@ observers(my_object) << my_observer
 
 Override the action called on the observer with:
 ```ruby
-observers << my_observer, action: :overridden_action
+observers.push(my_observer, action: :overridden_action)
 ```
+
+ℹ️ **Note:** `push` needs to be used instead of `<<` in this situation so that Ruby doesn't get confused about the syntax.
 
 ### Actions
 

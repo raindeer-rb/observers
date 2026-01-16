@@ -13,9 +13,10 @@ module Observers
   # Add an observer on the observable side.
   def observers(key: self)
     Struct.new(:key) do
-      def <<(object, action: nil)
+      def push(object, action: nil)
         Observables[key].observe(object:, action:)
       end
+      alias :<< :push
     end.new(key)
   end
 
