@@ -89,9 +89,25 @@ end
 
 ### Action Precedence
 
-1. `observe action:` - Overrides `trigger` and event actions
+1. `observe action:` and `observers << my_object, action:` - Overrides `trigger` and event actions
 2. `trigger action:` - Overrides event actions
 3. Event's `@action` - Overrides Observers' default action
+
+## API
+
+### Observers
+
+The `observers` method is more flexible than it seems.
+
+Reference a different object to observe with:
+```ruby
+observers(my_object) << my_observer
+```
+
+Override the action called on the observer with:
+```ruby
+observers << my_observer, action: :overridden_action
+```
 
 ## Installation
 
