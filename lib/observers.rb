@@ -4,23 +4,34 @@ require_relative 'observables'
 require_relative 'models/observer'
 
 module Observers
-  def self.included(klass)
-    klass.extend Observers
+  class << self
+    def included(klass)
+      klass.extend Observers
+    end
   end
 
-  # TODO: Unit test order.
-  def observe(key, action: nil, order: Observables.observables.count)
-    observer = Observer.new(object: self, action:, order:)
-    Observables.observe(key:, observer:)
+  # Add an observer on the observable side.
+  def observers(key = self)
+    ObservableProxy = Struct.new do
+      def <<(object, action: nil)
+        Observables[key].observe(object:, action:)
+      end
+    end
+    ObservableProxy.new
   end
 
-  # Returns the last observer with a non-nil return value.
+  # Add an observer on the observer side.
+  def observe(key, action: nil)
+    Observables[key].observe(object: self, action:)
+  end
+
+  # Returns the last observer's non-nil return value.
   def trigger(key = self, action: nil, event: nil)
-    # TODO: Parsing logic can be simplified/removed now that action and event args are separated.
-    Observables.trigger(key:, action:, event:)
+    Observables.fetch(key).trigger(action:, event:)
   end
 
   # TODO: Provide a "pipe/port/take" method that uses ractors to be concurrent... if supplied with immutable Data?
 end
 
+# For quick debugging, not official API.
 OOO = Observers::Observables.observables
