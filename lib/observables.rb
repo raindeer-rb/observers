@@ -21,7 +21,7 @@ module Observers
       end
 
       def upsert(key:)
-        observables[key] = Observable.new(key:) if observables[key].nil?
+        observables[key] = Observable.new if observables[key].nil?
         observables[key]
       end
 
