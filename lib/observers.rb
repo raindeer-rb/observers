@@ -37,4 +37,4 @@ module Observers
 end
 
 # For quick debugging, not official API.
-OOO = Observers::Observables.observables
+OOO = Observers::Observables.observables unless defined?(OOO)
