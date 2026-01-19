@@ -17,6 +17,10 @@ module Observers
         Observables[key].observe(object:, action:)
       end
       alias :<< :push
+
+      def count
+        Observables[key].observers.count
+      end
     end.new(key)
   end
 
