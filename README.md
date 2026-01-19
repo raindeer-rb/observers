@@ -99,7 +99,7 @@ end
 
 The `observers` method is more flexible than it seems.
 
-Reference a different object to observe with:
+Reference an object other than `self` to observe:
 ```ruby
 observers(my_object) << my_observer
 ```
