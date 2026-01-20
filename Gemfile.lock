@@ -1,12 +1,12 @@
 PATH
   remote: ../low_type
   specs:
-    low_type (1.1.5)
+    low_type (1.1.6)
 
 PATH
   remote: .
   specs:
-    observers (0.5.1)
+    observers (0.5.2)
       low_dependency
 
 GEM
