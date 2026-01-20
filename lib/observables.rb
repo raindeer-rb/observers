@@ -4,7 +4,7 @@ require_relative 'models/observable'
 
 module Observers
   class Observables
-    class MissingObservableError < StandardError; end
+    class MissingKeyError < StandardError; end
 
     class << self
       def observables
@@ -13,7 +13,7 @@ module Observers
       end
 
       def fetch(key)
-        observables[key] || raise(MissingObservableError, "Observable key '#{key}' not found")
+        observables[key] || raise(MissingKeyError, "Observable key '#{key}' not found")
       end
 
       def [](key)
