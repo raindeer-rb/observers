@@ -13,6 +13,7 @@ module Observers
       end
 
       def fetch(key)
+        # TODO: Log instead per configuration, much better to fail silently sometimes!
         observables[key] || raise(MissingKeyError, "Observable key '#{key}' not found")
       end
 
