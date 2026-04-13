@@ -12,13 +12,15 @@ module Observers
     def trigger(action:, event:)
       action = @action if @action
       event ? @object.send(action, **{ event: }) : @object.send(action)
-    rescue ArgumentError
+    rescue ArgumentError => e
       type = @object.instance_of?(Class) ? @object : @object.class
+      method_type = @object.instance_of?(Class) ? '.' : '#'
 
-      raise ArgumentError, "#{type}##{action} has an 'event:' keyword argument but no event was sent" if event.nil?
+      raise ArgumentError, "#{type}##{action} has an 'event:' keyword argument but no event arg was sent" if event.nil?
 
-      # TODO: An error here will bubble up to the observer that triggered this observer, overwriting this error with its error.
-      raise ArgumentError, "#{event.class} sent to #{type}##{action} but it has no 'event:' keyword argument"
+      # Events trigger events, so the error bubbles up to becomes the error message for the next rescue's error message:
+      # "RequestEvent sent to Rain::Router#handle -> StatusEvent sent to Error404Node.render -> unknown keyword: :props"
+      raise ArgumentError, "#{event.class} sent to #{type}#{method_type}#{action} -> #{e.message}"
     end
   end
 end
