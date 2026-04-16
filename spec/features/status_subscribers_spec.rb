@@ -9,7 +9,7 @@ require_relative '../fixtures/status_subscriber'
 
 RSpec.describe 'StatusSubscriber' do
   before do
-    Observers::Observables.reset
+    Observers::Keys.reset
 
     Object.send(:remove_const, 'StatusPublisher') unless defined?(StatusPublisher)
     Object.send(:remove_const, 'StatusSubcriber') unless defined?(StatusSubscriber)
@@ -18,9 +18,9 @@ RSpec.describe 'StatusSubscriber' do
     load 'spec/fixtures/status_subscriber.rb'
   end
 
-  describe 'Observables' do
+  describe 'Keys' do
     it 'creates an observer' do
-      expect(Observers::Observables[Low::Types::Status[200]].observers.count).to eq(1)
+      expect(Observers::Keys[Low::Types::Status[200]].observers.count).to eq(1)
     end
   end
 

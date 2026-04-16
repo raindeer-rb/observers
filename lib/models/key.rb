@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Observers
-  class Observable
+  class Key
     attr_reader :observers
 
     def initialize

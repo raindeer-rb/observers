@@ -5,14 +5,14 @@ load 'spec/fixtures/inverse_publisher.rb'
 
 RSpec.describe InversePublisher do
   before do
-    Observers::Observables.reset
+    Observers::Keys.reset
     Object.send(:remove_const, 'InversePublisher')
     load 'spec/fixtures/inverse_publisher.rb'
   end
 
   describe '.observers' do
     it 'saves observers in correct order' do
-      observers = Observers::Observables.fetch(InversePublisher).observers
+      observers = Observers::Keys.fetch(InversePublisher).observers
       expect(observers[0].object).to eq(Subscriber1)
       expect(observers[1].object).to eq(Subscriber2)
       expect(observers[2].object).to eq(Subscriber3)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'observables'
+require_relative 'keys'
 require_relative 'models/observer'
 
 module Observers
@@ -10,35 +10,35 @@ module Observers
     end
   end
 
-  # Add an observer on the observable side.
+  # Add an observer on the key side.
   def observers(key = self)
     Struct.new(:key) do
       def push(object, action: nil)
-        Observables[key].observe(object:, action:)
+        Keys[key].observe(object:, action:)
       end
       alias :<< :push
 
       def count
-        Observables[key].observers.count
+        Keys[key].observers.count
       end
     end.new(key)
   end
 
   # Add an observer on the observer side.
   def observe(key, action: nil)
-    Observables[key].observe(object: self, action:)
+    Keys[key].observe(object: self, action:)
   end
 
   def trigger(key = self, action: nil, event: nil)
-    Observables.fetch(key).trigger(action:, event:)
+    Keys.fetch(key).trigger(action:, event:)
   end
 
   def take(key = self, action: nil, event: nil)
-    Observables.fetch(key).take(action:, event:)
+    Keys.fetch(key).take(action:, event:)
   end
 
   # TODO: Provide a "pipe/port/take" method that uses ractors to be concurrent... if supplied with immutable Data?
 end
 
 # For quick debugging, not official API.
-OOO = Observers::Observables.observables unless defined?(OOO)
+OKK = Observers::Keys.keys unless defined?(OKK)

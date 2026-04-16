@@ -7,7 +7,7 @@ require_relative '../fixtures/class_subscribers'
 
 RSpec.describe 'ClassSubscribers' do
   before do
-    Observers::Observables.reset
+    Observers::Keys.reset
 
     Object.send(:remove_const, 'ClassPublisher')
     Object.send(:remove_const, 'NilSubscriber')
@@ -18,9 +18,9 @@ RSpec.describe 'ClassSubscribers' do
     load 'spec/fixtures/class_subscribers.rb'
   end
 
-  describe 'Observables' do
+  describe 'Keys' do
     it 'creates observers' do
-      expect(Observers::Observables[ClassPublisher].observers.count).to eq(4)
+      expect(Observers::Keys[ClassPublisher].observers.count).to eq(4)
     end
   end
 
