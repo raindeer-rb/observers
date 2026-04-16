@@ -44,7 +44,7 @@ RSpec.describe 'ClassSubscribers' do
     end
 
     context 'with event' do
-      let(:event) { LowEvent.new(action: :action) }
+      let(:event) { MockEvent.new(action: :action) }
 
       before do
         allow(TrueSubscriber).to receive(:action).with(event:)
