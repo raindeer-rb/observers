@@ -7,5 +7,5 @@ class StatusSubscriber
   include LowType
   include Observers
 
-  observe Status[200]
+  observe Low::Types::Status[200]
 end

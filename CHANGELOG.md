@@ -26,7 +26,7 @@ Minor features that don't break backwards compatibility are released as patches.
 
 ### Added
 
-- Support observing a complex type like `LowType::Status[200]`
+- Support observing a complex type like `Low::Types::Status[200]`
 
 ### Changed
 

@@ -20,7 +20,7 @@ RSpec.describe 'StatusSubscriber' do
 
   describe 'Observables' do
     it 'creates an observer' do
-      expect(Observers::Observables[LowType::Status[200]].observers.count).to eq(1)
+      expect(Observers::Observables[Low::Types::Status[200]].observers.count).to eq(1)
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe 'StatusSubscriber' do
       end
 
       it "triggers an observer's action" do
-        StatusPublisher.trigger(LowType::Status[200], action:)
+        StatusPublisher.trigger(Low::Types::Status[200], action:)
         expect(StatusSubscriber).to have_received(:action)
       end
 
@@ -51,7 +51,7 @@ RSpec.describe 'StatusSubscriber' do
       end
 
       it "triggers an observer's action" do
-        StatusPublisher.trigger(LowType::Status[200], event:)
+        StatusPublisher.trigger(Low::Types::Status[200], event:)
         expect(StatusSubscriber).to have_received(:action)
       end
 
