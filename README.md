@@ -2,9 +2,9 @@
 
 # Observers
 
-Observe objects of any kind and trigger actions/events on them.
+Observe objects/keys of any kind and trigger events and actions on them.
 
-Observers are decoupled from the objects they observe. Instead of directly observing a particular object, we observe the "key" that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
+Observers are decoupled from the objects they observe. Instead of directly observing a particular object, they observe a "key" that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
 
 ```ruby
 class MySubscriber
@@ -25,11 +25,11 @@ class MyPublisher
 end
 ```
 
-ℹ️ **Note:** Observers are called in the order that they are defined.
+ℹ️ Observers are called in the order that they are defined.
 
 ## Triggers
 
-`include Observers` in the class that you'd like to trigger actions/events from:
+Add `include Observers` to the class that you'd like to trigger actions/events from:
 
 ```ruby
 class MyPublisher
@@ -40,12 +40,12 @@ end
 
 ### Actions
 
-Calls the `my_action` method on MySubscriber and returns the last observer's return value that was non-nil:
+Calls the `my_action` method on `MySubscriber` and returns the last observer that had a non-nil return value:
 ```ruby
 MyPublisher.trigger action: :my_action
 ```
 
-Trigger the action on any observers to `any_object_or_class`:
+Trigger the action on all observers to `any_object_or_class`:
 ```ruby
 MyPublisher.trigger any_object_or_class, action: :my_action
 ```
@@ -68,7 +68,7 @@ MyPublisher.trigger any_object_or_class, event: LowEvent.new(event_data)
 
 ### Default Action
 
-The default action that will be called on an observer is `handle` or `handle(event:)` if the action, event or `action` don't specify this.
+The default action that will be called on an observer is `handle`/`handle(event:)`. This happens when the trigger's, event's or observer's `action` are `nil`.
 
 ### Overriding Actions
 
@@ -79,6 +79,7 @@ An action can be overridden at each layer:
 ```ruby
 class MySubscriber
   include Observers
+
   observe MyPublisher, action: :clear_cache
 
   def self.clear_cache
