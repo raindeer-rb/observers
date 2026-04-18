@@ -4,7 +4,9 @@
 
 Observe objects/keys of any kind and trigger events and actions on them.
 
-Observers are decoupled from the objects they observe. Instead of directly observing a particular object, they observe a "key" that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
+<p align="center"><img src="assets/Decoupled.svg" alt="Decoupled diagram" height="200"/></p>
+
+Observers are decoupled from the objects they observe. Instead of directly observing a particular object, they observe a *key* that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
 
 ```ruby
 class MySubscriber
@@ -40,14 +42,14 @@ end
 
 ### Actions
 
-Calls the `my_action` method on `MySubscriber` and returns the last observer that had a non-nil return value:
+Call the `my_action` method on all observers of `MySubscriber` with:
 ```ruby
 MyPublisher.trigger action: :my_action
 ```
 
-Trigger the action on all observers of `any_object_or_class`:
+Trigger the action on all observers of `my_class_or_instance` with:
 ```ruby
-MyPublisher.trigger key: any_object_or_class, action: :my_action
+MyPublisher.trigger key: my_class_or_instance, action: :my_action
 ```
 
 ### Events
@@ -59,9 +61,9 @@ Calls the `handle(event:)` method on all observers to `MySubscriber` and return 
 MyPublisher.trigger event: LowEvent.new(event_data)
 ```
 
-Trigger the event on any observers of `any_object_or_class`:
+Trigger the event on any observers of `my_class_or_instance`:
 ```ruby
-MyPublisher.trigger key: any_object_or_class, event: LowEvent.new(event_data)
+MyPublisher.trigger key: my_class_or_instance, event: LowEvent.new(event_data)
 ```
 
 ℹ️ **Note:** Events should inherit from `LowEvent` or replicate its methods and attributes.
