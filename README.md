@@ -14,7 +14,7 @@ class MySubscriber
   observe MyPublisher
 
   def self.handle
-    # Method that will be called upon trigger.
+    # This method will be called upon trigger.
   end
 end
 ```
@@ -36,39 +36,39 @@ Add `include Observers` to the class that you'd like to trigger actions/events f
 ```ruby
 class MyPublisher
   include Observers
-  # "trigger" method now available on class and instance.
+  # The "trigger" method is now available on the class and instance.
 end
 ```
 
 ### Actions
 
-Call the `my_action` method on all observers of `MySubscriber` with:
+Call the `my_action` method on all observers of `MyPublisher` with:
 ```ruby
-MyPublisher.trigger action: :my_action
+trigger action: :my_action
 ```
 
 Trigger the action on all observers of `my_class_or_instance` with:
 ```ruby
-MyPublisher.trigger key: my_class_or_instance, action: :my_action
+trigger key: my_class_or_instance, action: :my_action
 ```
 
 ### Events
 
 Trigger events on observers by using the `event` keyword argument.
 
-Call the `handle(event:)` method on all observers to `MySubscriber`:
+Call the `handle(event:)` method on all observers to `MyPublisher`:
 ```ruby
-MyPublisher.trigger event: MyEvent.new(my_data)
+trigger event: MyEvent.new(my_data)
 ```
 
 Trigger an event on any observers of `my_class_or_instance`:
 ```ruby
-MyPublisher.trigger key: my_class_or_instance, event: LowEvent.new(event_data)
+trigger key: my_class_or_instance, event: LowEvent.new(event_data)
 ```
 
 The event should contain an `action` attribute, or you may supply it to the `trigger` method as keyword argument:
 ```ruby
-MyPublisher.trigger key: my_class_or_instance, event: LowEvent.new(event_data), action: :handle
+trigger key: my_class_or_instance, event: LowEvent.new(event_data), action: :handle
 ```
 
 ## Integrations
