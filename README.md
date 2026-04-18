@@ -77,10 +77,30 @@ trigger key: my_class_or_instance, event: LowEvent.new(event_data), action: :han
 
 Observers integrates with [LowEvent](https://github.com/low-rb/low_event) for a more event-centric API.
 
+Define your event class, inheriting from `LowEvent`:
+
 ```ruby
-MyEvent.trigger()
+class MyEvent < LowEvent
+  def initialize(data:, action: :render)
+    super(key: self.class, action:)
+    @data = data
+  end
+end
 ```
-ℹ️ **Note:** Events should inherit from `LowEvent` or replicate its methods and attributes.
+
+Observe it with:
+```ruby
+class MyObserver
+  include Observers
+  observe MyEvent
+  def render(event:) = event.data
+end
+```
+
+Trigger the event and its observer with:
+```ruby
+MyEvent.trigger(data: "Rendered") # => "Rendered"
+```
 
 ## API
 
