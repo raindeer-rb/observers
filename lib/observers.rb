@@ -29,11 +29,11 @@ module Observers
     Keys[key].observe(object: self, action:)
   end
 
-  def trigger(key = self, action: nil, event: nil)
+  def trigger(key: self, action: nil, event: nil)
     Keys.fetch(key).trigger(action:, event:)
   end
 
-  def take(key = self, action: nil, event: nil)
+  def take(key: self, action: nil, event: nil)
     Keys.fetch(key).take(action:, event:)
   end
 

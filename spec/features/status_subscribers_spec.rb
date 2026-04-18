@@ -33,7 +33,7 @@ RSpec.describe 'StatusSubscriber' do
       end
 
       it "triggers an observer's action" do
-        StatusPublisher.trigger(Low::Types::Status[200], action:)
+        StatusPublisher.trigger(key: Low::Types::Status[200], action:)
         expect(StatusSubscriber).to have_received(:action)
       end
 
@@ -51,7 +51,7 @@ RSpec.describe 'StatusSubscriber' do
       end
 
       it "triggers an observer's action" do
-        StatusPublisher.trigger(Low::Types::Status[200], event:)
+        StatusPublisher.trigger(key: Low::Types::Status[200], event:)
         expect(StatusSubscriber).to have_received(:action)
       end
 

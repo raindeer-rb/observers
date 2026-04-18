@@ -45,9 +45,9 @@ Calls the `my_action` method on `MySubscriber` and returns the last observer tha
 MyPublisher.trigger action: :my_action
 ```
 
-Trigger the action on all observers to `any_object_or_class`:
+Trigger the action on all observers of `any_object_or_class`:
 ```ruby
-MyPublisher.trigger any_object_or_class, action: :my_action
+MyPublisher.trigger key: any_object_or_class, action: :my_action
 ```
 
 ### Events
@@ -59,9 +59,9 @@ Calls the `handle(event:)` method on all observers to `MySubscriber` and return 
 MyPublisher.trigger event: LowEvent.new(event_data)
 ```
 
-Trigger the event on any observers to `any_object_or_class`:
+Trigger the event on any observers of `any_object_or_class`:
 ```ruby
-MyPublisher.trigger any_object_or_class, event: LowEvent.new(event_data)
+MyPublisher.trigger key: any_object_or_class, event: LowEvent.new(event_data)
 ```
 
 ℹ️ **Note:** Events should inherit from `LowEvent` or replicate its methods and attributes.
@@ -92,7 +92,7 @@ end
 
 1. `observe action:` and `observers << my_object, action:` - Overrides `trigger` and event actions
 2. `trigger action:` - Overrides event actions
-3. Event's `@action` - Overrides Observers' default action
+3. Event's `@action` - Overrides the default action of each observer
 
 ## API
 
@@ -105,7 +105,7 @@ Reference an object other than `self` to observe:
 observers(my_object) << my_observer
 ```
 
-Override the action called on the observer with:
+Override the default action of the observer with:
 ```ruby
 observers.push(my_observer, action: :overridden_action)
 ```
