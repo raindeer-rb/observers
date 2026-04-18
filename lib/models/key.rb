@@ -15,7 +15,7 @@ module Observers
     end
 
     # @returns: The result of the last observer with a non-nil value.
-    def trigger(action:, event:)
+    def trigger(action: nil, event:)
       action = event.action if event && action.nil?
       action = :handle if action.nil?
 
@@ -30,7 +30,7 @@ module Observers
     end
 
     # @returns: The result of the first observer with a non-nil value.
-    def take(action:, event:)
+    def take(action: nil, event:)
       action = event.action if event && action.nil?
       action = :handle if action.nil?
 
