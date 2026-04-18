@@ -9,6 +9,8 @@ module Observers
     end
 
     def observe(object:, action:)
+      # TODO: We can observe objects directly, no need to wrap in an observer... no need to let the object's observer override the action?
+      # A future reason I can think of for keeping observer wrapper is to track whether the object has implemented certain actions/methods.
       @observers << Observer.new(object:, action:)
     end
 
