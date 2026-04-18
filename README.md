@@ -54,19 +54,35 @@ MyPublisher.trigger key: my_class_or_instance, action: :my_action
 
 ### Events
 
-Observers integrates with [LowEvent](https://github.com/low-rb/low_event), allowing you to pass an event to your observer.
+Trigger events on observers by using the `event` keyword argument.
 
-Calls the `handle(event:)` method on all observers to `MySubscriber` and return the last observer's return value that was non-nil:
+Call the `handle(event:)` method on all observers to `MySubscriber`:
 ```ruby
-MyPublisher.trigger event: LowEvent.new(event_data)
+MyPublisher.trigger event: MyEvent.new(my_data)
 ```
 
-Trigger the event on any observers of `my_class_or_instance`:
+Trigger an event on any observers of `my_class_or_instance`:
 ```ruby
 MyPublisher.trigger key: my_class_or_instance, event: LowEvent.new(event_data)
 ```
 
+The event should contain an `action` attribute, or you may supply it to the `trigger` method as keyword argument:
+```ruby
+MyPublisher.trigger key: my_class_or_instance, event: LowEvent.new(event_data), action: :handle
+```
+
+## Integrations
+
+## LowEvent
+
+Observers integrates with [LowEvent](https://github.com/low-rb/low_event) for a more event-centric API.
+
+```ruby
+MyEvent.trigger()
+```
 ℹ️ **Note:** Events should inherit from `LowEvent` or replicate its methods and attributes.
+
+## API
 
 ### Default Action
 
@@ -95,8 +111,6 @@ end
 1. `observe action:` and `observers << my_object, action:` - Overrides `trigger` and event actions
 2. `trigger action:` - Overrides event actions
 3. Event's `@action` - Overrides the default action of each observer
-
-## API
 
 ### Observers
 
