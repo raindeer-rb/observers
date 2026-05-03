@@ -24,6 +24,7 @@ module Observers
       @observers.each do |observer|
         result = observer.trigger(action:, event:)
         last_result = result unless result.nil?
+        yield if block_given?
       end
 
       last_result
@@ -36,6 +37,7 @@ module Observers
 
       @observers.each do |observer|
         result = observer.trigger(action:, event:)
+        yield if block_given?
         return result unless result.nil?
       end
 
