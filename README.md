@@ -2,9 +2,11 @@
 
 # Observers
 
-Observe objects of any kind and trigger actions/events on them.
+Observe objects/keys of any kind and trigger events and actions on them.
 
-Observers are decoupled from the objects they observe. Instead of directly observing a particular object, we observe the "key" that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
+<p align="center"><img src="assets/Decoupled.svg" alt="Decoupled diagram" height="200"/></p>
+
+Observers are decoupled from the objects they observe. Instead of directly observing a particular object, they observe a *key* that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
 
 ```ruby
 class MySubscriber
@@ -12,7 +14,7 @@ class MySubscriber
   observe MyPublisher
 
   def self.handle
-    # Method that will be called upon trigger.
+    # This method will be called upon trigger.
   end
 end
 ```
@@ -25,50 +27,86 @@ class MyPublisher
 end
 ```
 
-ℹ️ **Note:** Observers are called in the order that they are defined.
+ℹ️ Observers are called in the order that they are defined.
 
 ## Triggers
 
-`include Observers` in the class that you'd like to trigger actions/events from:
+Add `include Observers` to the class that you'd like to trigger actions/events from:
 
 ```ruby
 class MyPublisher
   include Observers
-  # "trigger" method now available on class and instance.
+  # The "trigger" method is now available on the class and instance.
 end
 ```
 
 ### Actions
 
-Calls the `my_action` method on MySubscriber and returns the last observer's return value that was non-nil:
+Call the `my_action` method on all observers of `MyPublisher` with:
 ```ruby
-MyPublisher.trigger action: :my_action
+trigger action: :my_action
 ```
 
-Trigger the action on any observers to `any_object_or_class`:
+Trigger the action on all observers of `my_class_or_instance` with:
 ```ruby
-MyPublisher.trigger any_object_or_class, action: :my_action
+trigger key: my_class_or_instance, action: :my_action
 ```
 
 ### Events
 
-Observers integrates with [LowEvent](https://github.com/low-rb/low_event), allowing you to pass an event to your observer.
+Trigger events on observers by using the `event` keyword argument.
 
-Calls the `handle(event:)` method on all observers to `MySubscriber` and return the last observer's return value that was non-nil:
+Call the `handle(event:)` method on all observers to `MyPublisher`:
 ```ruby
-MyPublisher.trigger event: LowEvent.new(event_data)
+trigger event: MyEvent.new(my_data)
 ```
 
-Trigger the event on any observers to `any_object_or_class`:
+Trigger an event on any observers of `my_class_or_instance`:
 ```ruby
-MyPublisher.trigger any_object_or_class, event: LowEvent.new(event_data)
+trigger key: my_class_or_instance, event: LowEvent.new(event_data)
 ```
 
-ℹ️ **Note:** Events should inherit from `LowEvent` or replicate its methods and attributes.
+The event should contain an `action` attribute, or you may supply it to the `trigger` method as keyword argument:
+```ruby
+trigger key: my_class_or_instance, event: LowEvent.new(event_data), action: :handle
+```
+
+## Integrations
+
+## LowEvent
+
+Observers integrates with [LowEvent](https://github.com/low-rb/low_event) for a more event-centric API.
+
+Define your event class, inheriting from `LowEvent`:
+
+```ruby
+class MyEvent < LowEvent
+  def initialize(data:, action: :render)
+    super(key: self.class, action:)
+    @data = data
+  end
+end
+```
+
+Observe it with:
+```ruby
+class MyObserver
+  include Observers
+  observe MyEvent
+  def render(event:) = event.data
+end
+```
+
+Trigger the event and its observer with:
+```ruby
+MyEvent.trigger(data: "Rendered") # => "Rendered"
+```
+
+## API
 
 ### Default Action
 
-The default action that will be called on an observer is `handle` or `handle(event:)` if the action, event or `action` don't specify this.
+The default action that will be called on an observer is `handle`/`handle(event:)`. This happens when the trigger's, event's or observer's `action` are `nil`.
 
 ### Overriding Actions
 
@@ -79,6 +117,7 @@ An action can be overridden at each layer:
 ```ruby
 class MySubscriber
   include Observers
+
   observe MyPublisher, action: :clear_cache
 
   def self.clear_cache
@@ -91,9 +130,7 @@ end
 
 1. `observe action:` and `observers << my_object, action:` - Overrides `trigger` and event actions
 2. `trigger action:` - Overrides event actions
-3. Event's `@action` - Overrides Observers' default action
-
-## API
+3. Event's `@action` - Overrides the default action of each observer
 
 ### Observers
 
@@ -104,7 +141,7 @@ Reference an object other than `self` to observe:
 observers(my_object) << my_observer
 ```
 
-Override the action called on the observer with:
+Override the default action of the observer with:
 ```ruby
 observers.push(my_observer, action: :overridden_action)
 ```

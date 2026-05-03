@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-module Low
-  class Event
-    attr_reader :action
+class MockEvent
+  attr_reader :action
 
-    def initialize(action: :handle)
-      @action = action
-    end
+  def initialize(action: :handle)
+    @action = action
   end
 end
-
-LowEvent = Low::Event

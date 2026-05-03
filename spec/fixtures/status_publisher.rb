@@ -9,11 +9,11 @@ class StatusPublisher
 
   class << self
     def trigger_action(action:)
-      trigger(Low::Types::Status[200], action:)
+      trigger(key: Low::Types::Status[200], action:)
     end
 
     def trigger_event(event:)
-      trigger(Low::Types::Status[200], event:)
+      trigger(key: Low::Types::Status[200], event:)
     end
   end
 end

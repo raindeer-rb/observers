@@ -38,7 +38,7 @@ RSpec.describe InversePublisher do
     end
 
     context 'with event' do
-      let(:event) { LowEvent.new(action: :handle) }
+      let(:event) { MockEvent.new(action: :handle) }
 
       before do
         allow(Subscriber1).to receive(:handle).with(event:).and_return(nil)
