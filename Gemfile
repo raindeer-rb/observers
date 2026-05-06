@@ -8,8 +8,7 @@ gemspec
 group :development do
   gem 'low_type', path: '../lowtype' # Provides Status type.
 
-  gem 'pry'
-  gem 'pry-nav'
+  gem 'irb'
   gem 'rack'
   gem 'rack-test'
   gem 'rake', '~> 13.0'
