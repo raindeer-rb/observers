@@ -5,6 +5,10 @@ require_relative 'models/observer'
 
 module Observers
   class << self
+    def [](key)
+      Keys[key]
+    end
+
     def included(klass)
       klass.extend Observers
     end
@@ -47,6 +51,3 @@ module Observers
 
   # TODO: Provide a "pipe/port/take" method that uses ractors to be concurrent... if supplied with immutable Data?
 end
-
-# For quick debugging, not official API.
-OKK = Observers::Keys.keys unless defined?(OKK)
