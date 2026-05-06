@@ -4,7 +4,8 @@ module Observers
   class Key
     attr_reader :observers
 
-    def initialize
+    def initialize(key:)
+      @key = key
       @observers = []
     end
 
@@ -15,7 +16,9 @@ module Observers
     end
 
     # @returns: The result of the last observer with a non-nil value.
-    def trigger(action: nil, event:)
+    def trigger(action: nil, event: nil)
+      key_callback
+
       action = event.action if event && action.nil?
       action = :handle if action.nil?
 
@@ -31,7 +34,9 @@ module Observers
     end
 
     # @returns: The result of the first observer with a non-nil value.
-    def take(action: nil, event:)
+    def take(action: nil, event: nil)
+      key_callback
+
       action = event.action if event && action.nil?
       action = :handle if action.nil?
 
@@ -42,6 +47,12 @@ module Observers
       end
 
       nil # This is a bad day for the take method, one of the worst.
+    end
+
+    private
+
+    def key_callback
+      Observers.config.key_callback.call(@key) if Observers.config.key_callback && @observers.empty?
     end
   end
 end

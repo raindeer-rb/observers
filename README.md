@@ -153,6 +153,18 @@ observers.push(my_observer, action: :overridden_action)
 - `trigger` - Calls all observers. Returns the last non-nil value.
 - `take` - Calls all observers up until the first non-nil value. Returns the first non-nil value.
 
+## Config
+
+Copy and paste the following and change the defaults to configure Observers:
+
+```ruby
+# This configuration should be set before the class that includes Observers is required.
+Observers.configure do |config|
+  # A lambda to call when actions/events are triggered for a key without observers.
+  config.key_callback = nil # Or "->(key) { MyLogger.log('my message') }"
+end
+```
+
 ## Installation
 
 Add `gem 'observers'` to your Gemfile then:
