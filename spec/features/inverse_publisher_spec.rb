@@ -10,9 +10,10 @@ RSpec.describe InversePublisher do
     load 'spec/fixtures/inverse_publisher.rb'
   end
 
-  describe '.observers' do
+  describe '.[]' do
     it 'saves observers in correct order' do
-      observers = Observers[InversePublisher].observers
+      observers = Observers[InversePublisher]
+
       expect(observers[0].object).to eq(Subscriber1)
       expect(observers[1].object).to eq(Subscriber2)
       expect(observers[2].object).to eq(Subscriber3)

@@ -5,11 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Minor features that don't break backwards compatibility are released as patches.
 
+## 0.8.0 [UNRELEASED]
+
+### Changed
+
+- Change `observe :event, :action` behaviour to be the action to accept, not to override
+
 ## 0.7.0
 
 ### Added
 
-- Add `Observers[key]` API
+### Changed
+
+- Add `Observers[key]` API that returns observers
 - Add callback when key without observers
 
 ## 0.6.0

@@ -2,11 +2,11 @@
 
 # Observers
 
-Observe objects/keys of any kind and trigger events and actions on them.
+Observe objects/keys of any kind and trigger actions and events on them.
 
 <p align="center"><img src="assets/Decoupled.svg" alt="Decoupled diagram" height="200"/></p>
 
-Observers are decoupled from the objects they observe. Instead of directly observing a particular object, they observe a *key* that represents that object. Anything can be observed out of the box; a class, an object, a struct, symbol or string. You just need to `observe` it:
+Observers are decoupled from the objects they observe. Instead of directly observing a particular object, they observe a *key* that represents that object. Anything can be observed out of the box; a class, instance, struct, symbol or string... you just need to `observe` it:
 
 ```ruby
 class MySubscriber
@@ -19,7 +19,7 @@ class MySubscriber
 end
 ```
 
-You can also add observers from the object being observed:
+Add observers from the object being observed with:
 ```ruby
 class MyPublisher
   include Observers
@@ -27,48 +27,39 @@ class MyPublisher
 end
 ```
 
-ℹ️ Observers are called in the order that they are defined.
+ℹ️ Observers are ordered, called in the order that they are defined and can be reordered via an array-like interface.
 
 ## Triggers
-
-Add `include Observers` to the class that you'd like to trigger actions/events from:
-
-```ruby
-class MyPublisher
-  include Observers
-  # The "trigger" method is now available on the class and instance.
-end
-```
 
 ### Actions
 
 Call the `my_action` method on all observers of `MyPublisher` with:
 ```ruby
-trigger action: :my_action
-```
-
-Trigger the action on all observers of `my_class_or_instance` with:
-```ruby
-trigger key: my_class_or_instance, action: :my_action
+class MyPublisher
+  include Observers
+  trigger action: :my_action
+end
 ```
 
 ### Events
 
-Trigger events on observers by using the `event` keyword argument.
-
-Call the `handle(event:)` method on all observers to `MyPublisher`:
+Trigger events on observers with the `event` keyword argument:
 ```ruby
-trigger event: MyEvent.new(my_data)
+class MyPublisher
+  include Observers
+  trigger action: :my_action, event: MyEvent.new(my_data)
+end
 ```
 
-Trigger an event on any observers of `my_class_or_instance`:
-```ruby
-trigger key: my_class_or_instance, event: LowEvent.new(event_data)
-```
+ℹ️ All observers to `MyPublisher` will have their `my_action(event:)` method called with the event passed in as a keyword argument.
 
-The event should contain an `action` attribute, or you may supply it to the `trigger` method as keyword argument:
+### Keys
+
+Call actions on all observers of a differeent object/key with a `key:` keyword argument:
 ```ruby
-trigger key: my_class_or_instance, event: LowEvent.new(event_data), action: :handle
+trigger key: OtherPublisher, action: :my_action
+trigger key: OtherPublisher, action: :my_action
+trigger key: OtherPublisher, action: :my_action, event: MyEvent.new(event_data)
 ```
 
 ## Integrations
@@ -77,7 +68,7 @@ trigger key: my_class_or_instance, event: LowEvent.new(event_data), action: :han
 
 Observers integrates with [LowEvent](https://github.com/low-rb/low_event) for a more event-centric API.
 
-Define your event class, inheriting from `LowEvent`:
+Inherit you event class from `LowEvent`:
 
 ```ruby
 class MyEvent < LowEvent
@@ -93,7 +84,10 @@ Observe it with:
 class MyObserver
   include Observers
   observe MyEvent
-  def render(event:) = event.data
+
+  def render(event:)
+    event.data
+  end
 end
 ```
 
@@ -101,6 +95,8 @@ Trigger the event and its observer with:
 ```ruby
 MyEvent.trigger(data: "Rendered") # => "Rendered"
 ```
+
+ℹ️ Events define their own actions.
 
 ## API
 

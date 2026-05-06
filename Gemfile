@@ -6,12 +6,14 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'low_type', path: '../lowtype' # Provides Status type.
-
   gem 'irb'
   gem 'rack'
   gem 'rack-test'
   gem 'rake', '~> 13.0'
   gem 'rspec', '~> 3.0'
   gem 'rubocop', require: false
+end
+
+group :test do
+  gem 'low_type', path: '../low_type'
 end

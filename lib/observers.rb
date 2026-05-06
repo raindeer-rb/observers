@@ -4,9 +4,11 @@ require_relative 'keys'
 require_relative 'models/observer'
 
 module Observers
+  Config = Struct.new(:key_callback)
+
   class << self
     def [](key)
-      Keys[key]
+      Keys[key].observers
     end
 
     def included(klass)
@@ -21,8 +23,6 @@ module Observers
       yield(config)
     end
   end
-
-  Config = Struct.new(:key_callback)
 
   def observers(key = self)
     Struct.new(:key) do
