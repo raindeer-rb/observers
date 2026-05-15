@@ -19,7 +19,7 @@ class MySubscriber
 end
 ```
 
-Add observers from the object being observed with:
+Add observers *from* the object being observed with:
 ```ruby
 class MyPublisher
   include Observers
