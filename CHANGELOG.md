@@ -15,8 +15,6 @@ Minor features that don't break backwards compatibility are released as patches.
 
 ### Added
 
-### Changed
-
 - Add `Observers[key]` API that returns observers
 - Add callback when key without observers
 
