@@ -10,11 +10,11 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'Observe objects of any kind'
   spec.description = 'Observe events for objects of any kind'
-  spec.homepage = 'https://github.com/maedi/observers'
+  spec.homepage = 'https://github.com/raindeer-rb/observers'
   spec.required_ruby_version = '>= 3.3.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/maedi/observers/src/branch/main'
+  spec.metadata['source_code_uri'] = 'https://github.com/raindeer-rb/observers/src/branch/main'
 
   # Specify which files should be added to the gem when it is released.
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
