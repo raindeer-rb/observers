@@ -21,12 +21,9 @@ module Observers
     def trigger(action: nil, event: nil)
       empty_observers_callback if @observers.empty?
 
-      action = event.action if event && action.nil?
-      action = :handle if action.nil?
-
       last_result = nil
 
-      @observers.each do |observer|
+      per_observer_per_action(action:, event:) do |observer, action|
         result = observer.trigger(action:, event:)
         last_result = result unless result.nil?
         yield if block_given?
@@ -35,14 +32,11 @@ module Observers
       last_result
     end
 
-    # @returns: The result of the first observer with a non-nil value.
+    # @returns: The result of the first observer and the first action with a non-nil value.
     def take(action: nil, event: nil)
       return empty_observers_callback if @observers.empty?
 
-      action = event.action if event && action.nil?
-      action = :handle if action.nil?
-
-      @observers.each do |observer|
+      per_observer_per_action(action:, event:) do |observer, action|
         result = observer.trigger(action:, event:)
         yield if block_given?
         return result unless result.nil?
@@ -56,6 +50,28 @@ module Observers
 
     def empty_observers_callback
       Observers.config.empty_observers_callback&.call(@key)
+    end
+
+    private
+
+    def per_observer_per_action(action:, event:)
+      action = action || event&.action
+
+      if action
+        @observers.each do |observer|
+          yield observer, action
+        end
+      elsif event&.actions
+        @observers.each do |observer|
+          event.actions.each do |action|
+            yield observer, action
+          end
+        end
+      else
+        @observers.each do |observer|
+          yield observer, :handle
+        end
+      end
     end
   end
 end

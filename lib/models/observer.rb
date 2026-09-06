@@ -12,6 +12,8 @@ module Observers
     def trigger(action:, event:)
       action = @action if @action
 
+      return unless @object.respond_to?(action)
+
       # Assumption that if method has params then that param is "event:".
       if event && @object.method(action).parameters.count > 0
         @object.send(action, **{ event: })
