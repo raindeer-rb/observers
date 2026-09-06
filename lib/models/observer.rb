@@ -24,8 +24,8 @@ module Observers
 
       raise ArgumentError, "#{type}##{action} has an 'event:' keyword argument but no event arg was sent" if event.nil?
 
-      # Events trigger events, so the error bubbles up to becomes the error message for the next rescue's error message:
-      # "RequestEvent sent to Rain::Router#route -> StatusEvent sent to Error404Node.render -> unknown keyword: :props"
+      # Events trigger events, so the error bubbles up to become the error message for the next rescue's error message:
+      # "RequestEvent sent to Rain::Router#route_request -> StatusEvent sent to Error404Node.render -> unknown keyword: :props"
       raise ArgumentError, "#{event.class} sent to #{type}#{method_type}#{action} -> #{e.message}"
     end
   end
