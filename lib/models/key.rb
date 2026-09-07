@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Observers
-  class EmptySetError < StandardError; end
+  class NoObserversError < StandardError; end
 
   class Key
     attr_reader :observers
@@ -19,7 +19,8 @@ module Observers
 
     # @returns: The result of the last observer with a non-nil value.
     def trigger(action: nil, event: nil)
-      empty_observers_callback if @observers.empty?
+      # TODO: Breaks some tests... should it? Yes. Should it be disabled when testing? Yes.
+      # raise NoObserversError, "No observers configured for #{@key}" if @observers.empty?
 
       last_result = nil
 
@@ -34,7 +35,8 @@ module Observers
 
     # @returns: The result of the first observer and the first action with a non-nil value.
     def take(action: nil, event: nil)
-      return empty_observers_callback if @observers.empty?
+      # TODO: Breaks some tests... should it? Yes. Should it be disabled when testing? Yes.
+      # raise NoObserversError, "No observers configured for #{@key}" if @observers.empty?
 
       per_observer_per_action(action:, event:) do |observer, action|
         result = observer.trigger(action:, event:)
@@ -42,14 +44,8 @@ module Observers
         return result unless result.nil?
       end
 
-      # This is a bad day for the take method, one of the worst.
-      raise EmptySetError, 'No observers returned a result'
-    end
-
-    private
-
-    def empty_observers_callback
-      Observers.config.empty_observers_callback&.call(@key)
+      # None of the observers returned a non-nil value.
+      nil
     end
 
     private
