@@ -51,7 +51,7 @@ module Observers
     private
 
     def per_observer_per_action(action:, event:)
-      action = action || event&.action
+      action ||= event&.action
 
       if action
         @observers.each do |observer|
