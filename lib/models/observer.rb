@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'observer_error'
+
 module Observers
   class Observer
     attr_reader :object, :action
@@ -20,15 +22,10 @@ module Observers
       else
         @object.send(action)
       end
-    rescue ArgumentError => e
-      type = @object.instance_of?(Class) ? @object : @object.class
-      method_type = @object.instance_of?(Class) ? '.' : '#'
-
-      raise ArgumentError, "#{type}##{action} has an 'event:' keyword argument but no event arg was sent" if event.nil?
-
-      # Events trigger events, so the error bubbles up to become the error message for the next rescue's error message:
-      # "RequestEvent sent to Rain::Router#route_request -> StatusEvent sent to Error404Node.render -> unknown keyword: :props"
-      raise ArgumentError, "#{event.class} sent to #{type}#{method_type}#{action} -> #{e.message}"
+    rescue StandardError => e
+      # Events trigger events, so this error bubbles up to become the error for the next rescue:
+      # "RequestEvent -> Rain::Router#route_request -> StatusEvent -> Error404Node.render -> unknown keyword: :props"
+      raise ObserverError.new(e.message, object:, event:, action:, previous_error: e)
     end
   end
 end
