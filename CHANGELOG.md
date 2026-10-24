@@ -5,13 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Minor features that don't break backwards compatibility are released as patches.
 
-## 1.0.0 [UNRELEASED]
+## 1.0.0
 
-### Changed
+### Added
 
-- Change `observe :event, :action` behaviour to be the action to accept, not to override
+- Show actual error location and method
 
-## 0.9.0 [UNRELEASED]
+## 0.9.0
 
 ### Added
 
