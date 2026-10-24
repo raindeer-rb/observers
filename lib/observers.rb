@@ -37,8 +37,13 @@ module Observers
     end.new(key)
   end
 
-  def observe(key, action: nil)
-    Keys[key].observe(object: self, action:)
+  # Observe a key with "observe key, action: :action", or keys and their actions with "observe key => :action".
+  # Ruby passes "key => :action" as keyword arguments when the key isn't a symbol, so they arrive in key_actions.
+  def observe(key = nil, action: nil, **key_actions)
+    key_actions = key.is_a?(Hash) ? key : { key => action } unless key.nil?
+    raise ArgumentError, 'Missing key to observe' if key_actions.empty?
+
+    key_actions.each { |each_key, each_action| Keys[each_key].observe(object: self, action: each_action) }
   end
 
   def trigger(key: self, action: nil, event: nil)

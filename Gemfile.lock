@@ -1,16 +1,16 @@
 PATH
   remote: ../lowtype
   specs:
-    lowtype (1.6.0)
+    lowtype (1.6.1)
       dirload
       expressions (~> 0.1)
-      lowkey (~> 0.5)
+      lowkey (>= 0.7.1)
       trees
 
 PATH
   remote: .
   specs:
-    observers (1.0.0)
+    observers (1.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -31,7 +31,7 @@ GEM
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
-    lowkey (0.7.0)
+    lowkey (0.7.1)
       prism
     parallel (2.3.0)
     parser (3.3.13.0)
@@ -87,7 +87,7 @@ GEM
       parser (>= 3.3.7.2)
       prism (~> 1.7)
     ruby-progressbar (1.13.0)
-    trees (0.4.0)
+    trees (0.3.5)
     tsort (0.2.0)
     unicode-display_width (3.3.0)
       unicode-emoji (~> 4.3)
