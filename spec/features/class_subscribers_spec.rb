@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/observers'
-require_relative '../fixtures/low_event'
+require_relative '../fixtures/lowevent'
 require_relative '../fixtures/class_publisher'
 require_relative '../fixtures/class_subscribers'
 

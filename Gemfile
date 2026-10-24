@@ -15,5 +15,5 @@ group :development do
 end
 
 group :test do
-  gem 'low_type', path: '../low_type'
+  gem 'lowtype', path: '../lowtype'
 end

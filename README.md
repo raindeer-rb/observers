@@ -66,7 +66,7 @@ trigger key: OtherPublisher, action: :my_action, event: MyEvent.new(event_data)
 
 ## LowEvent
 
-Observers integrates with [LowEvent](https://github.com/low-rb/low_event) for a more event-centric API.
+Observers integrates with [LowEvent](https://github.com/low-rb/lowevent) for a more event-centric API.
 
 Inherit you event class from `LowEvent`:
 

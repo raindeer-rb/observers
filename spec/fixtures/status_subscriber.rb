@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'low_type'
+require 'lowtype'
 require_relative '../../lib/observers'
 
 class StatusSubscriber
